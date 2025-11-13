@@ -27,10 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * REST Controller for FX Deal operations.
- * Provides endpoints for importing and retrieving FX deals.
- */
+
 @RestController
 @RequestMapping("/api/fx-deals")
 @RequiredArgsConstructor

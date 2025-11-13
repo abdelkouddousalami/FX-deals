@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.3.0</version>
+            <version>2.7.0</version> <!-- Compatible with Spring Boot 3.5.x -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -119,3 +119,4 @@
     </build>
 
 </project>
+
