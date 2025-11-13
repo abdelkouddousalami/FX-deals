@@ -1,0 +1,23 @@
+[
+  {
+    "dealUniqueId": "API-TEST-001",
+    "fromCurrencyIsoCode": "USD",
+    "toCurrencyIsoCode": "EUR",
+    "dealTimestamp": "2024-11-10T10:30:00",
+    "dealAmount": 15000.50
+  },
+  {
+    "dealUniqueId": "API-TEST-002",
+    "fromCurrencyIsoCode": "GBP",
+    "toCurrencyIsoCode": "JPY",
+    "dealTimestamp": "2024-11-10T11:45:00",
+    "dealAmount": 8500.75
+  },
+  {
+    "dealUniqueId": "API-TEST-003",
+    "fromCurrencyIsoCode": "EUR",
+    "toCurrencyIsoCode": "USD",
+    "dealTimestamp": "2024-11-10T14:20:00",
+    "dealAmount": 20000.00
+  }
+]

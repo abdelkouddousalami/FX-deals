@@ -1,0 +1,557 @@
+{
+	"info": {
+		"_postman_id": "fx-deals-warehouse-collection",
+		"name": "FX Deals Warehouse API",
+		"description": "Complete Postman collection for testing the ClusteredData Warehouse FX Deals API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals",
+						"health"
+					]
+				},
+				"description": "Check if the API is up and running"
+			},
+			"response": []
+		},
+		{
+			"name": "Import Single Deal - Success",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-{{$randomInt}}\",\n  \"fromCurrencyIsoCode\": \"USD\",\n  \"toCurrencyIsoCode\": \"EUR\",\n  \"dealTimestamp\": \"2024-11-13T10:30:00\",\n  \"dealAmount\": 1000000.50\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Import a single FX deal successfully. Uses random ID to avoid duplicates."
+			},
+			"response": []
+		},
+		{
+			"name": "Import Single Deal - Specific ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-001\",\n  \"fromCurrencyIsoCode\": \"GBP\",\n  \"toCurrencyIsoCode\": \"JPY\",\n  \"dealTimestamp\": \"2024-11-13T14:45:00\",\n  \"dealAmount\": 750000.25\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Import a deal with specific ID (DEAL-001). Run this once, then test duplicate detection."
+			},
+			"response": []
+		},
+		{
+			"name": "Import Deal - Duplicate (409 Error)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-001\",\n  \"fromCurrencyIsoCode\": \"USD\",\n  \"toCurrencyIsoCode\": \"EUR\",\n  \"dealTimestamp\": \"2024-11-13T10:30:00\",\n  \"dealAmount\": 500000.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Test duplicate detection - should return 409 Conflict error"
+			},
+			"response": []
+		},
+		{
+			"name": "Import Deal - Invalid Currency (400 Error)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-INVALID-CURR\",\n  \"fromCurrencyIsoCode\": \"ZZZ\",\n  \"toCurrencyIsoCode\": \"EUR\",\n  \"dealTimestamp\": \"2024-11-13T10:30:00\",\n  \"dealAmount\": 1000.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Test invalid currency code - should return 400 Bad Request"
+			},
+			"response": []
+		},
+		{
+			"name": "Import Deal - Same Currency Pair (400 Error)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-SAME-CURR\",\n  \"fromCurrencyIsoCode\": \"USD\",\n  \"toCurrencyIsoCode\": \"USD\",\n  \"dealTimestamp\": \"2024-11-13T10:30:00\",\n  \"dealAmount\": 1000.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Test same currency pair validation - should return 400 Bad Request"
+			},
+			"response": []
+		},
+		{
+			"name": "Import Deal - Missing Fields (400 Error)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"\",\n  \"fromCurrencyIsoCode\": \"\",\n  \"toCurrencyIsoCode\": \"\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Test validation with missing required fields - should return 400 Bad Request with field errors"
+			},
+			"response": []
+		},
+		{
+			"name": "Import Deal - Future Date (400 Error)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-FUTURE\",\n  \"fromCurrencyIsoCode\": \"USD\",\n  \"toCurrencyIsoCode\": \"EUR\",\n  \"dealTimestamp\": \"2026-12-31T23:59:59\",\n  \"dealAmount\": 1000.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Test future date validation - should return 400 Bad Request"
+			},
+			"response": []
+		},
+		{
+			"name": "Import Deal - Negative Amount (400 Error)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dealUniqueId\": \"DEAL-NEG-AMOUNT\",\n  \"fromCurrencyIsoCode\": \"USD\",\n  \"toCurrencyIsoCode\": \"EUR\",\n  \"dealTimestamp\": \"2024-11-13T10:30:00\",\n  \"dealAmount\": -1000.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Test negative amount validation - should return 400 Bad Request"
+			},
+			"response": []
+		},
+		{
+			"name": "Batch Import - All Success",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"dealUniqueId\": \"BATCH-001\",\n    \"fromCurrencyIsoCode\": \"USD\",\n    \"toCurrencyIsoCode\": \"EUR\",\n    \"dealTimestamp\": \"2024-11-13T10:00:00\",\n    \"dealAmount\": 1000000.00\n  },\n  {\n    \"dealUniqueId\": \"BATCH-002\",\n    \"fromCurrencyIsoCode\": \"GBP\",\n    \"toCurrencyIsoCode\": \"JPY\",\n    \"dealTimestamp\": \"2024-11-13T11:00:00\",\n    \"dealAmount\": 500000.50\n  },\n  {\n    \"dealUniqueId\": \"BATCH-003\",\n    \"fromCurrencyIsoCode\": \"EUR\",\n    \"toCurrencyIsoCode\": \"CHF\",\n    \"dealTimestamp\": \"2024-11-13T12:00:00\",\n    \"dealAmount\": 750000.75\n  }\n]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals",
+						"batch"
+					]
+				},
+				"description": "Import multiple deals in batch - all should succeed"
+			},
+			"response": []
+		},
+		{
+			"name": "Batch Import - Mixed Results (No Rollback)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"dealUniqueId\": \"MIXED-001\",\n    \"fromCurrencyIsoCode\": \"USD\",\n    \"toCurrencyIsoCode\": \"EUR\",\n    \"dealTimestamp\": \"2024-11-13T10:00:00\",\n    \"dealAmount\": 1000000.00\n  },\n  {\n    \"dealUniqueId\": \"DEAL-001\",\n    \"fromCurrencyIsoCode\": \"GBP\",\n    \"toCurrencyIsoCode\": \"JPY\",\n    \"dealTimestamp\": \"2024-11-13T11:00:00\",\n    \"dealAmount\": 500000.50\n  },\n  {\n    \"dealUniqueId\": \"MIXED-003\",\n    \"fromCurrencyIsoCode\": \"EUR\",\n    \"toCurrencyIsoCode\": \"CHF\",\n    \"dealTimestamp\": \"2024-11-13T12:00:00\",\n    \"dealAmount\": 750000.75\n  },\n  {\n    \"dealUniqueId\": \"MIXED-004\",\n    \"fromCurrencyIsoCode\": \"ZZZ\",\n    \"toCurrencyIsoCode\": \"EUR\",\n    \"dealTimestamp\": \"2024-11-13T13:00:00\",\n    \"dealAmount\": 250000.25\n  }\n]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals",
+						"batch"
+					]
+				},
+				"description": "Batch import with some failures (duplicate DEAL-001, invalid currency ZZZ). Should return 207 Multi-Status with individual results. Successful deals should be persisted despite failures."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Deals - Default Pagination",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					]
+				},
+				"description": "Get all deals with default pagination (page=0, size=20, sortBy=createdAt, sortDir=desc)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Deals - Custom Pagination",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals?page=0&size=10&sortBy=dealAmount&sortDir=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"description": "Page number (0-based)"
+						},
+						{
+							"key": "size",
+							"value": "10",
+							"description": "Page size"
+						},
+						{
+							"key": "sortBy",
+							"value": "dealAmount",
+							"description": "Field to sort by"
+						},
+						{
+							"key": "sortDir",
+							"value": "asc",
+							"description": "Sort direction (asc/desc)"
+						}
+					]
+				},
+				"description": "Get deals with custom pagination - 10 per page, sorted by amount ascending"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Deals - Page 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals?page=1&size=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page 2 (0-based indexing)"
+						},
+						{
+							"key": "size",
+							"value": "5",
+							"description": "5 items per page"
+						}
+					]
+				},
+				"description": "Get second page of deals with 5 items per page"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Deals - Sort by Timestamp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals?sortBy=dealTimestamp&sortDir=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals"
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "dealTimestamp",
+							"description": "Sort by deal timestamp"
+						},
+						{
+							"key": "sortDir",
+							"value": "desc",
+							"description": "Newest first"
+						}
+					]
+				},
+				"description": "Get all deals sorted by timestamp (newest first)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Deal by Unique ID - Success",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals/DEAL-001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals",
+						"DEAL-001"
+					]
+				},
+				"description": "Get a specific deal by its unique ID (DEAL-001). Make sure to import this deal first."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Deal by Unique ID - Not Found (404)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals/NONEXISTENT-DEAL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals",
+						"NONEXISTENT-DEAL"
+					]
+				},
+				"description": "Try to get a deal that doesn't exist - should return 404 Not Found"
+			},
+			"response": []
+		},
+		{
+			"name": "Multiple Valid Deals (Different Currencies)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"dealUniqueId\": \"FX-USD-EUR-001\",\n    \"fromCurrencyIsoCode\": \"USD\",\n    \"toCurrencyIsoCode\": \"EUR\",\n    \"dealTimestamp\": \"2024-11-13T09:00:00\",\n    \"dealAmount\": 1500000.00\n  },\n  {\n    \"dealUniqueId\": \"FX-GBP-USD-001\",\n    \"fromCurrencyIsoCode\": \"GBP\",\n    \"toCurrencyIsoCode\": \"USD\",\n    \"dealTimestamp\": \"2024-11-13T09:15:00\",\n    \"dealAmount\": 2000000.00\n  },\n  {\n    \"dealUniqueId\": \"FX-JPY-CHF-001\",\n    \"fromCurrencyIsoCode\": \"JPY\",\n    \"toCurrencyIsoCode\": \"CHF\",\n    \"dealTimestamp\": \"2024-11-13T09:30:00\",\n    \"dealAmount\": 5000000.00\n  },\n  {\n    \"dealUniqueId\": \"FX-AUD-CAD-001\",\n    \"fromCurrencyIsoCode\": \"AUD\",\n    \"toCurrencyIsoCode\": \"CAD\",\n    \"dealTimestamp\": \"2024-11-13T09:45:00\",\n    \"dealAmount\": 800000.00\n  },\n  {\n    \"dealUniqueId\": \"FX-EUR-GBP-001\",\n    \"fromCurrencyIsoCode\": \"EUR\",\n    \"toCurrencyIsoCode\": \"GBP\",\n    \"dealTimestamp\": \"2024-11-13T10:00:00\",\n    \"dealAmount\": 1200000.00\n  }\n]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/fx-deals/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"fx-deals",
+						"batch"
+					]
+				},
+				"description": "Import multiple deals with different currency pairs to populate the database for testing"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
