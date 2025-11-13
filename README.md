@@ -6,6 +6,7 @@
 [![H2](https://img.shields.io/badge/H2-2.3.232-blue.svg)](https://www.h2database.com/)
 [![Tests](https://img.shields.io/badge/Tests-23%20Passing-success.svg)](https://junit.org/junit5/)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
+[![CI/CD](https://github.com/abdelkouddousalami/FX-deals/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/abdelkouddousalami/FX-deals/actions/workflows/ci-cd.yml)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## Table of Contents
@@ -19,6 +20,7 @@
 - [Testing](#testing)
 - [Configuration](#configuration)
 - [Docker Deployment](#docker-deployment)
+- [CI/CD Pipeline](#cicd-pipeline)
 - [Error Handling](#error-handling)
 
 ## Overview
@@ -44,6 +46,7 @@ This application demonstrates enterprise-level Spring Boot development with best
 - **Logging**: Detailed logging using SLF4J/Logback with configurable levels
 - **Unit Testing**: Extensive test coverage (23 tests) using JUnit 5, Mockito, and AssertJ
 - **Code Coverage**: JaCoCo integration for test coverage reporting
+- **CI/CD Pipeline**: Automated build, test, and deployment with GitHub Actions
 - **Docker Support**: Complete Docker Compose setup for MySQL deployment
 - **H2 In-Memory Database**: Development-ready configuration without external dependencies
 - **Database Indexing**: Optimized queries with proper indexing strategies
@@ -567,6 +570,62 @@ docker-compose down
 - **mysql**: MySQL database (port 3306)
 
 Note: The Docker Compose setup uses MySQL. For local development without Docker, the application defaults to H2 in-memory database.
+
+## CI/CD Pipeline
+
+This project includes a complete CI/CD pipeline using GitHub Actions that automatically builds, tests, and deploys the application.
+
+### Pipeline Features
+- **Automated Testing**: Runs all 23 tests on every push and PR
+- **Code Coverage**: Generates and uploads coverage reports to Codecov
+- **Docker Build**: Automatically builds and pushes Docker images to Docker Hub
+- **Code Quality**: Integrates with SonarCloud for code analysis
+- **Automated Deployment**: Deploys to staging and production on Heroku
+- **Health Checks**: Verifies deployment success automatically
+
+### Workflows
+
+#### CI/CD Pipeline (`ci-cd.yml`)
+Triggered on push to `main` or `develop` branches:
+1. Build and test the application
+2. Generate coverage reports
+3. Build and push Docker image
+4. Run SonarCloud analysis
+5. Deploy to staging environment
+6. Deploy to production (after staging success)
+
+#### Pull Request Checks (`pr-check.yml`)
+Triggered on pull requests:
+1. Validate Maven project
+2. Run all tests
+3. Check code formatting
+4. Verify build success
+5. Comment results on PR
+
+### Setup Instructions
+
+See [CI-CD-SETUP.md](CI-CD-SETUP.md) for detailed setup instructions.
+
+Quick setup:
+```bash
+# Add GitHub Secrets (Settings → Secrets → Actions):
+DOCKER_USERNAME       # Your Docker Hub username
+DOCKER_PASSWORD       # Your Docker Hub token
+HEROKU_API_KEY       # Your Heroku API key
+HEROKU_EMAIL         # Your Heroku email
+SONAR_TOKEN          # SonarCloud token (optional)
+```
+
+### Live Application URLs
+
+After deployment, the application is accessible at:
+- **Production**: https://fx-deals-warehouse.herokuapp.com/swagger-ui.html
+- **Staging**: https://fx-deals-staging.herokuapp.com/swagger-ui.html
+
+### Pipeline Status
+
+![CI/CD Pipeline](https://github.com/abdelkouddousalami/FX-deals/actions/workflows/ci-cd.yml/badge.svg)
+![PR Checks](https://github.com/abdelkouddousalami/FX-deals/actions/workflows/pr-check.yml/badge.svg)
 
 ## Additional Resources
 
