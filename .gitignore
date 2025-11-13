@@ -31,3 +31,18 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Application Logs ###
+logs/
+*.log
+
+### Docker ###
+.docker/
+
+### JaCoCo Coverage ###
+*.exec
+jacoco.exec
+
+### OS Files ###
+.DS_Store
+Thumbs.db

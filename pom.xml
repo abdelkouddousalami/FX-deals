@@ -12,13 +12,19 @@
     <artifactId>ProgressSoft</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ClusteredData Warehouse</name>
-    <description>FX Deals Data Warehouse for Bloomberg</description>
-    <url/>
+    <description>Enterprise FX Deals Data Warehouse - A robust Spring Boot application for managing foreign exchange transactions with comprehensive validation, duplicate detection, and RESTful API</description>
+    <url>https://github.com/abdelkouddousalami/FX-deals</url>
     <licenses>
-        <license/>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <name>Abdelkouddous Alami</name>
+            <email>your.email@example.com</email>
+        </developer>
     </developers>
     <scm>
         <connection/>
