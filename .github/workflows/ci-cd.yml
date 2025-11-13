@@ -52,8 +52,6 @@ jobs:
         name: fx-deals-warehouse
         path: target/*.jar
         retention-days: 7
-        path: target/*.jar
-        retention-days: 7
 
   docker-build:
     name: Build Docker Image
