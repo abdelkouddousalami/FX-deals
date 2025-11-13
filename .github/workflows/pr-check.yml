@@ -19,12 +19,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    
-    - name: Make Maven wrapper executable
-      run: chmod +x ./mvnw
         
     - name: Validate Maven project
-      run: ./mvnw validate
+      run: |
+        chmod +x mvnw
+        ./mvnw validate
       
     - name: Check code formatting
       run: ./mvnw spotless:check || echo "Code formatting check completed"

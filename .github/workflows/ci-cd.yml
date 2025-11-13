@@ -21,18 +21,18 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    
-    - name: Make Maven wrapper executable
-      run: chmod +x ./mvnw
         
     - name: Build with Maven
-      run: ./mvnw clean compile -DskipTests
+      run: |
+        chmod +x mvnw
+        ./mvnw clean compile -DskipTests
       
     - name: Run tests
       run: ./mvnw test
       
     - name: Generate test coverage report
       run: ./mvnw jacoco:report
+      continue-on-error: true
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -41,6 +41,7 @@ jobs:
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
+      continue-on-error: true
         
     - name: Package application
       run: ./mvnw package -DskipTests
@@ -49,6 +50,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: fx-deals-warehouse
+        path: target/*.jar
+        retention-days: 7
         path: target/*.jar
         retention-days: 7
 
@@ -109,7 +112,7 @@ jobs:
         cache: maven
     
     - name: Make Maven wrapper executable
-      run: chmod +x ./mvnw
+      run: chmod +x mvnw
         
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
