@@ -1,7 +1,10 @@
 -- Sample data for testing FX Deals Warehouse
 -- This script will be executed when the MySQL container starts
 
--- Use the database
+-- Create test database for running tests
+CREATE DATABASE IF NOT EXISTS fxdeals_test_db;
+
+-- Use the main database
 USE fxdeals_db;
 
 -- Create table if not exists (Hibernate will handle this, but included for reference)

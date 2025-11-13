@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**
- * Repository interface for FxDeal entity operations.
- * Provides CRUD operations and custom queries for FX deals.
- */
+
 @Repository
 public interface FxDealRepository extends JpaRepository<FxDeal, Long> {
 

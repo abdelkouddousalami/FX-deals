@@ -6,9 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-/**
- * Standard error response structure for API exceptions.
- */
+
 @Data
 @AllArgsConstructor
 public class ErrorResponse {

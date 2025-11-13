@@ -79,7 +79,7 @@ public class FxDealController {
     })
     @PostMapping("/batch")
     public ResponseEntity<Map<String, Object>> importDeals(
-            @Valid @RequestBody List<@Valid FxDealRequest> requests) {
+            @Valid @RequestBody List<FxDealRequest> requests) {
         log.info("Received batch import request with {} deals", requests.size());
 
         List<FxDealService.DealImportResult> results = fxDealService.importDeals(requests);

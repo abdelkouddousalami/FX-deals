@@ -10,9 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-/**
- * OpenAPI/Swagger configuration for FX Deals Warehouse API documentation.
- */
+
 @Configuration
 public class OpenApiConfig {
 

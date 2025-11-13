@@ -19,10 +19,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Service layer for FX Deal operations.
- * Handles business logic, validation, and persistence.
- */
+
 @Service
 @Validated
 @RequiredArgsConstructor

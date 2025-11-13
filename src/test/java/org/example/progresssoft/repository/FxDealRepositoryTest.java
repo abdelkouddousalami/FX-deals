@@ -4,8 +4,8 @@ import org.example.progresssoft.entity.FxDeal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,12 +13,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
+@SpringBootTest
+@Transactional
 @DisplayName("FxDealRepository Tests")
 class FxDealRepositoryTest {
-
-    @Autowired
-    private TestEntityManager entityManager;
 
     @Autowired
     private FxDealRepository fxDealRepository;
@@ -37,12 +35,12 @@ class FxDealRepositoryTest {
 
         // Act
         FxDeal savedDeal = fxDealRepository.save(deal);
-        FxDeal foundDeal = entityManager.find(FxDeal.class, savedDeal.getId());
+        Optional<FxDeal> foundDeal = fxDealRepository.findById(savedDeal.getId());
 
         // Assert
-        assertThat(foundDeal).isNotNull();
-        assertThat(foundDeal.getDealUniqueId()).isEqualTo("TEST-001");
-        assertThat(foundDeal.getFromCurrencyIsoCode()).isEqualTo("USD");
+        assertThat(foundDeal).isPresent();
+        assertThat(foundDeal.get().getDealUniqueId()).isEqualTo("TEST-001");
+        assertThat(foundDeal.get().getFromCurrencyIsoCode()).isEqualTo("USD");
     }
 
     @Test
@@ -57,8 +55,7 @@ class FxDealRepositoryTest {
                 .dealAmount(new BigDecimal("2000.00"))
                 .build();
 
-        entityManager.persist(deal);
-        entityManager.flush();
+        fxDealRepository.save(deal);
 
         // Act
         boolean exists = fxDealRepository.existsByDealUniqueId("TEST-002");
@@ -81,8 +78,7 @@ class FxDealRepositoryTest {
                 .dealAmount(new BigDecimal("1500.00"))
                 .build();
 
-        entityManager.persist(deal);
-        entityManager.flush();
+        fxDealRepository.save(deal);
 
         // Act
         Optional<FxDeal> foundDeal = fxDealRepository.findByDealUniqueId("TEST-003");
@@ -106,8 +102,7 @@ class FxDealRepositoryTest {
                 .dealAmount(new BigDecimal("1000.00"))
                 .build();
 
-        entityManager.persist(deal1);
-        entityManager.flush();
+        fxDealRepository.save(deal1);
 
         FxDeal deal2 = FxDeal.builder()
                 .dealUniqueId("UNIQUE-001")
@@ -119,8 +114,7 @@ class FxDealRepositoryTest {
 
         // Act & Assert
         try {
-            entityManager.persist(deal2);
-            entityManager.flush();
+            fxDealRepository.save(deal2);
         } catch (Exception e) {
             assertThat(e).isNotNull();
         }

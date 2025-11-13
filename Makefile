@@ -51,7 +51,7 @@ run:
 clean:
 	@echo "Cleaning build artifacts..."
 	./mvnw clean
-	rm -rf logs/
+	@powershell -Command "if (Test-Path logs) { Remove-Item -Recurse -Force logs }"
 
 # Build Docker image
 docker-build:
@@ -61,9 +61,9 @@ docker-build:
 # Start Docker containers
 docker-up:
 	@echo "Starting Docker containers..."
-	docker-compose up -d
+	@docker-compose up -d
 	@echo "Waiting for services to be ready..."
-	@timeout 30
+	@powershell -Command "Start-Sleep -Seconds 30"
 	@echo "Application is running at http://localhost:8080"
 	@echo "Health check: http://localhost:8080/api/fx-deals/health"
 
