@@ -219,4 +219,4 @@ If you have questions or need help, please:
 - Check existing issues and discussions
 - Reach out to the maintainers
 
-Thank you for contributing! 🎉
+Thank you for contributing!

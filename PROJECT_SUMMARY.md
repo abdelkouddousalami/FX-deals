@@ -1,12 +1,12 @@
 # Project Summary - FX Deals Warehouse
 
-## 📋 Project Overview
+## Project Overview
 
 **FX Deals Warehouse** is an enterprise-grade Spring Boot application designed to manage and persist Foreign Exchange (FX) deal transactions. Built with best practices, comprehensive testing, and production-ready features.
 
 ---
 
-## 🎯 Key Highlights
+## Key Highlights
 
 ### Technical Excellence
 - **Architecture**: Clean layered architecture (Controller → Service → Repository)
@@ -29,7 +29,7 @@
 
 ---
 
-## 🏗️ Architecture & Design
+## Architecture & Design
 
 ### Project Structure
 ```
@@ -61,7 +61,7 @@
 
 ---
 
-## 📊 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -77,7 +77,7 @@
 
 ---
 
-## 🧪 Testing & Quality Assurance
+## Testing & Quality Assurance
 
 ### Test Coverage
 - **Total Tests**: 23 passing tests
@@ -102,7 +102,7 @@
 
 ---
 
-## 🚀 Deployment Options
+## Deployment Options
 
 ### Option 1: Local Development (H2 Database)
 ```bash
@@ -124,7 +124,7 @@ docker-compose up -d
 
 ---
 
-## 🔒 Validation & Security
+## Validation & Security
 
 ### Input Validation
 - **Deal Unique ID**: Required, max 100 characters, must be unique
@@ -140,7 +140,7 @@ docker-compose up -d
 
 ---
 
-## 📈 Performance & Scalability
+## Performance & Scalability
 
 ### Database Optimizations
 - Indexed columns: `dealUniqueId` (unique), `dealTimestamp`
@@ -156,7 +156,7 @@ docker-compose up -d
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### Comprehensive Documentation
 - ✅ **README.md**: Complete setup and usage guide (632 lines)
@@ -174,7 +174,7 @@ docker-compose up -d
 
 ---
 
-## 🎓 Best Practices Demonstrated
+## Best Practices Demonstrated
 
 ### Software Engineering
 ✅ Clean Architecture with separation of concerns  
@@ -209,7 +209,7 @@ docker-compose up -d
 
 ---
 
-## 🏆 Production-Ready Features
+## Production-Ready Features
 
 ### Operational Excellence
 - Structured logging with correlation IDs
@@ -229,7 +229,7 @@ docker-compose up -d
 
 ---
 
-## 📦 Deliverables
+## Deliverables
 
 ### What's Included
 1. ✅ Complete Spring Boot application source code
@@ -245,7 +245,7 @@ docker-compose up -d
 
 ---
 
-## 🎯 Why This Project Stands Out
+## Why This Project Stands Out
 
 ### Technical Depth
 - Not just a CRUD app - implements complex business rules
@@ -270,7 +270,7 @@ docker-compose up -d
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Development
 ```bash
@@ -309,7 +309,7 @@ docker-compose logs -f app
 
 ---
 
-## 📞 Contact & Support
+## Contact & Support
 
 **Developer**: Abdelkouddous Alami  
 **Repository**: https://github.com/abdelkouddousalami/FX-deals  
@@ -317,7 +317,7 @@ docker-compose logs -f app
 
 ---
 
-## ✨ Final Notes
+## Final Notes
 
 This project demonstrates:
 - **Full-stack development expertise** with modern Java and Spring Boot
@@ -327,4 +327,4 @@ This project demonstrates:
 - **Documentation excellence** with detailed guides and API docs
 - **Production readiness** with proper error handling, logging, and deployment
 
-**Status**: ✅ Production Ready | 🧪 All Tests Passing | 📚 Fully Documented | 🐳 Docker Ready
+**Status**: Production Ready | All Tests Passing | Fully Documented | Docker Ready
